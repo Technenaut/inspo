@@ -1,13 +1,19 @@
 [
   {
     "id": 1714100001000,
-    "title": "Prada SS25 Campaign Identity",
+    "title": "Prada SS26 Campaign Identity",
     "url": "https://www.behance.net/gallery/example1",
     "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Branding", "Print/editorial"],
-      "theme": ["Luxury", "Minimal"]
+      "projectType": [
+        "Branding",
+        "Print/editorial"
+      ],
+      "theme": [
+        "Luxury",
+        "Minimal"
+      ]
     },
     "dateSaved": "2026-04-28"
   },
@@ -18,8 +24,14 @@
     "thumbnail": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Poster", "Typography"],
-      "theme": ["Brutalist", "Bold"]
+      "projectType": [
+        "Poster",
+        "Typography"
+      ],
+      "theme": [
+        "Brutalist",
+        "Bold"
+      ]
     },
     "dateSaved": "2026-04-27"
   },
@@ -30,8 +42,14 @@
     "thumbnail": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Branding", "Packaging"],
-      "theme": ["Organic", "Minimal"]
+      "projectType": [
+        "Branding",
+        "Packaging"
+      ],
+      "theme": [
+        "Organic",
+        "Minimal"
+      ]
     },
     "dateSaved": "2026-04-27"
   },
@@ -42,8 +60,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Motion"],
-      "theme": ["Dark", "Bold"]
+      "projectType": [
+        "Motion"
+      ],
+      "theme": [
+        "Dark",
+        "Bold"
+      ]
     },
     "dateSaved": "2026-04-26"
   },
@@ -54,8 +77,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Print/editorial"],
-      "theme": ["Street/urban", "Dark"]
+      "projectType": [
+        "Print/editorial"
+      ],
+      "theme": [
+        "Street/urban",
+        "Dark"
+      ]
     },
     "dateSaved": "2026-04-26"
   },
@@ -66,8 +94,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Web design"],
-      "theme": ["Retro", "Colorful"]
+      "projectType": [
+        "Web design"
+      ],
+      "theme": [
+        "Retro",
+        "Colorful"
+      ]
     },
     "dateSaved": "2026-04-25"
   },
@@ -78,8 +111,14 @@
     "thumbnail": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Typography"],
-      "theme": ["Dark", "Bold", "Colorful"]
+      "projectType": [
+        "Typography"
+      ],
+      "theme": [
+        "Dark",
+        "Bold",
+        "Colorful"
+      ]
     },
     "dateSaved": "2026-04-25"
   },
@@ -90,8 +129,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
     "type": "page",
     "tags": {
-      "projectType": ["Typography"],
-      "theme": ["Minimal", "Typographic"]
+      "projectType": [
+        "Typography"
+      ],
+      "theme": [
+        "Minimal",
+        "Typographic"
+      ]
     },
     "dateSaved": "2026-04-24"
   },
@@ -102,8 +146,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Illustration"],
-      "theme": ["Playful", "Colorful"]
+      "projectType": [
+        "Illustration"
+      ],
+      "theme": [
+        "Playful",
+        "Colorful"
+      ]
     },
     "dateSaved": "2026-04-24"
   },
@@ -114,8 +163,14 @@
     "thumbnail": "https://images.unsplash.com/photo-1558618047-f4e80c0d0bdf?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Environmental", "Branding"],
-      "theme": ["Bold", "Minimal"]
+      "projectType": [
+        "Environmental",
+        "Branding"
+      ],
+      "theme": [
+        "Bold",
+        "Minimal"
+      ]
     },
     "dateSaved": "2026-04-23"
   },
@@ -126,8 +181,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Social content"],
-      "theme": ["Bold", "Colorful"]
+      "projectType": [
+        "Social content"
+      ],
+      "theme": [
+        "Bold",
+        "Colorful"
+      ]
     },
     "dateSaved": "2026-04-23"
   },
@@ -138,8 +198,13 @@
     "thumbnail": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&q=80",
     "type": "image",
     "tags": {
-      "projectType": ["Print/editorial"],
-      "theme": ["Minimal", "Dark"]
+      "projectType": [
+        "Print/editorial"
+      ],
+      "theme": [
+        "Minimal",
+        "Dark"
+      ]
     },
     "dateSaved": "2026-04-22"
   }
