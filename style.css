@@ -485,3 +485,58 @@ main {
   gap: 4px;
   flex-shrink: 0;
 }
+/* ─── Inline Title Editing ────────────────────────────────────── */
+/* Add these to the bottom of your style.css */
+
+/* Card title — show edit affordance on hover */
+.card-title {
+  cursor: pointer;
+}
+.card-title:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 3px;
+}
+
+/* The inline input that replaces the title */
+.title-edit-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Save state flashes */
+.title-saving {
+  opacity: 0.5;
+}
+.title-saved {
+  color: #4caf50 !important;
+  transition: color 0.3s ease;
+}
+.title-error {
+  color: #f44336 !important;
+  transition: color 0.3s ease;
+}
+
+/* Lightbox title — same edit affordance */
+.lb-title {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 0.5em;
+}
+.lb-title:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 3px;
+}
