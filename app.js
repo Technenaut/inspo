@@ -185,6 +185,7 @@ function formatDate(str) {
 /* ─── Lightbox ────────────────────────────────────────────────── */
 function openLightbox(item) {
   lightbox.hidden = false;
+  lbClose.style.display = 'flex';
   lbOverlay.classList.add('visible');
   document.body.style.overflow = 'hidden';
 
@@ -253,6 +254,7 @@ function showLightboxFallback(item) {
 
 function closeLightbox() {
   lightbox.hidden = true;
+  lbClose.style.display = 'none';
   lbOverlay.classList.remove('visible');
   document.body.style.overflow = '';
   lbInner.innerHTML = '';
