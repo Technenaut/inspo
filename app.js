@@ -1,5 +1,9 @@
 /* ─── Config ──────────────────────────────────────────────────── */
 const DATA_URL = './data.json';
+const GITHUB_OWNER = 'technenaut';
+const GITHUB_REPO  = 'inspo';
+const GITHUB_FILE  = 'data.json';
+const GITHUB_API   = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
 
 const PROJECT_TYPES = [
   'Branding','Web design','Print/editorial','Poster','Packaging',
@@ -11,7 +15,7 @@ const THEMES = [
 ];
 
 /* ─── State ───────────────────────────────────────────────────── */
-let allItems   = [];
+let allItems     = [];
 let activeTypes  = new Set();
 let activeThemes = new Set();
 let searchQuery  = '';
@@ -40,6 +44,166 @@ async function init() {
   }
   render();
   bindEvents();
+}
+
+/* ─── GitHub Token ────────────────────────────────────────────── */
+function getToken() {
+  return localStorage.getItem('inspo_gh_token') || null;
+}
+
+function promptForToken() {
+  const token = prompt(
+    '🔑 Inspo needs your GitHub token to save edits.\n\n' +
+    'Paste a Personal Access Token with "Contents: Read & Write" permission.\n' +
+    '(Settings → Developer settings → Personal access tokens → Fine-grained)\n\n' +
+    'It will be stored only in this browser.'
+  );
+  if (token && token.trim()) {
+    localStorage.setItem('inspo_gh_token', token.trim());
+    return token.trim();
+  }
+  return null;
+}
+
+function ensureToken() {
+  return getToken() || promptForToken();
+}
+
+/* ─── GitHub API Write ────────────────────────────────────────── */
+async function saveAllItemsToGitHub(token) {
+  // 1. Get current SHA of the file (required for update)
+  const headRes = await fetch(GITHUB_API, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+    }
+  });
+  if (!headRes.ok) throw new Error(`GitHub GET failed: ${headRes.status}`);
+  const headData = await headRes.json();
+  const sha = headData.sha;
+
+  // 2. Encode updated content as base64
+  const json    = JSON.stringify(allItems, null, 2);
+  const encoded = btoa(unescape(encodeURIComponent(json))); // handles Unicode
+
+  // 3. Push update
+  const putRes = await fetch(GITHUB_API, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message: 'Update title via Inspo web app',
+      content: encoded,
+      sha,
+    })
+  });
+  if (!putRes.ok) {
+    const err = await putRes.json().catch(() => ({}));
+    throw new Error(`GitHub PUT failed: ${putRes.status} — ${err.message || ''}`);
+  }
+}
+
+/* ─── Inline Title Editing ────────────────────────────────────── */
+
+// Called by card title clicks and lightbox title clicks
+// itemId: the item's unique id
+// currentEl: the element to replace with an input
+// onSaved: optional callback(newTitle) after a successful save
+function startTitleEdit(itemId, currentEl, onSaved) {
+  const item = allItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  const original = item.title;
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = original;
+  input.className = 'title-edit-input';
+  input.setAttribute('aria-label', 'Edit title');
+
+  // Replace the element with the input
+  currentEl.replaceWith(input);
+  input.focus();
+  input.select();
+
+  let committed = false;
+
+  async function commit() {
+    if (committed) return;
+    committed = true;
+
+    const newTitle = input.value.trim() || original;
+
+    // Restore element with new title
+    currentEl.textContent = newTitle;
+    input.replaceWith(currentEl);
+
+    if (newTitle === original) return; // No change
+
+    // Optimistic update in state
+    item.title = newTitle;
+
+    // Also update any other rendered card for this item
+    syncCardTitle(itemId, newTitle);
+
+    // Sync to GitHub
+    const token = ensureToken();
+    if (!token) {
+      // User cancelled token prompt — revert
+      item.title = original;
+      currentEl.textContent = original;
+      syncCardTitle(itemId, original);
+      return;
+    }
+
+    currentEl.classList.add('title-saving');
+
+    try {
+      await saveAllItemsToGitHub(token);
+      currentEl.classList.remove('title-saving');
+      currentEl.classList.add('title-saved');
+      setTimeout(() => currentEl.classList.remove('title-saved'), 1500);
+      if (onSaved) onSaved(newTitle);
+    } catch (e) {
+      console.error('Failed to save title:', e);
+      currentEl.classList.remove('title-saving');
+      currentEl.classList.add('title-error');
+      setTimeout(() => currentEl.classList.remove('title-error'), 2000);
+
+      // If auth error, clear token so next attempt re-prompts
+      if (e.message.includes('401') || e.message.includes('403')) {
+        localStorage.removeItem('inspo_gh_token');
+      }
+
+      // Revert on failure
+      item.title = original;
+      currentEl.textContent = original;
+      syncCardTitle(itemId, original);
+    }
+  }
+
+  function cancel() {
+    if (committed) return;
+    committed = true;
+    currentEl.textContent = original;
+    input.replaceWith(currentEl);
+  }
+
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') { input.value = original; input.blur = cancel; input.blur(); }
+  });
+}
+
+// Update all rendered card titles for a given item id
+function syncCardTitle(itemId, newTitle) {
+  document.querySelectorAll(`.card[data-id="${itemId}"] .card-title`).forEach(el => {
+    el.textContent = newTitle;
+  });
 }
 
 /* ─── Dropdowns ───────────────────────────────────────────────── */
@@ -125,7 +289,7 @@ function render() {
   emptyState.hidden = true;
   itemCount.textContent = items.length + (items.length === 1 ? ' item' : ' items');
 
-  items.forEach((item, i) => {
+  items.forEach(item => {
     const card = buildCard(item);
     grid.appendChild(card);
   });
@@ -134,14 +298,37 @@ function render() {
 function buildCard(item) {
   const card = document.createElement('div');
   card.className = 'card';
-  card.innerHTML = `
-    <div class="card-thumb">${thumbHTML(item)}</div>
-    <div class="card-meta">
-      <p class="card-title">${escHtml(item.title)}</p>
-      <div class="card-tags">${tagsHTML(item)}</div>
-      <p class="card-date">${formatDate(item.dateSaved)}</p>
-    </div>
-  `;
+  card.dataset.id = item.id; // needed for syncCardTitle
+
+  const titleEl = document.createElement('p');
+  titleEl.className = 'card-title';
+  titleEl.textContent = item.title;
+  titleEl.title = 'Click to edit title';
+
+  // Edit on click — don't open lightbox
+  titleEl.addEventListener('click', e => {
+    e.stopPropagation();
+    startTitleEdit(item.id, titleEl);
+  });
+
+  const thumbDiv = document.createElement('div');
+  thumbDiv.className = 'card-thumb';
+  thumbDiv.innerHTML = thumbHTML(item);
+
+  const tagsDiv = document.createElement('div');
+  tagsDiv.className = 'card-tags';
+  tagsDiv.innerHTML = tagsHTML(item);
+
+  const dateP = document.createElement('p');
+  dateP.className = 'card-date';
+  dateP.textContent = formatDate(item.dateSaved);
+
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'card-meta';
+  metaDiv.append(titleEl, tagsDiv, dateP);
+
+  card.append(thumbDiv, metaDiv);
+
   // Lazy-load images
   const img = card.querySelector('img');
   if (img) {
@@ -153,7 +340,9 @@ function buildCard(item) {
     });
   }
 
+  // Click card body (not title) → lightbox
   card.addEventListener('click', () => openLightbox(item));
+
   return card;
 }
 
@@ -183,31 +372,32 @@ function formatDate(str) {
 }
 
 /* ─── Lightbox ────────────────────────────────────────────────── */
+let currentLightboxItem = null;
+
 function openLightbox(item) {
+  currentLightboxItem = item;
   lightbox.hidden = false;
   lbClose.classList.add('visible');
   lbOverlay.classList.add('visible');
   document.body.style.overflow = 'hidden';
 
   lbInner.innerHTML = lightboxContentHTML(item);
-  lbMeta.innerHTML  = lightboxMetaHTML(item);
+  lbMeta.innerHTML  = '';
+  lbMeta.appendChild(buildLightboxMeta(item));
 
   // If it's a page type, try iframe; detect if blocked
   if (item.type === 'page') {
     const iframe = lbInner.querySelector('iframe');
     if (iframe) {
       const timer = setTimeout(() => {
-        // Iframe likely blocked — show fallback
         showLightboxFallback(item);
       }, 4000);
 
       iframe.addEventListener('load', () => {
         clearTimeout(timer);
         try {
-          // If cross-origin, this throws → blocked
-          const _ = iframe.contentDocument;
+          const _ = iframe.contentDocument; // throws if cross-origin
         } catch (e) {
-          clearTimeout(timer);
           showLightboxFallback(item);
         }
       });
@@ -228,31 +418,55 @@ function lightboxContentHTML(item) {
   if (url && url.match(/\.(mp4|webm)$/i)) {
     return `<video src="${url}" controls autoplay loop muted playsinline></video>`;
   }
-  if (url && url.match(/\.gif$/i)) {
-    return `<img src="${url}" alt="${escHtml(item.title)}" />`;
-  }
   return `<img src="${url || ''}" alt="${escHtml(item.title)}" />`;
 }
 
-function lightboxMetaHTML(item) {
+function buildLightboxMeta(item) {
+  const frag = document.createDocumentFragment();
+
+  // Editable title
+  const titleEl = document.createElement('span');
+  titleEl.className = 'lb-title';
+  titleEl.textContent = item.title;
+  titleEl.title = 'Click to edit title';
+  titleEl.addEventListener('click', () => {
+    startTitleEdit(item.id, titleEl, newTitle => {
+      // Also sync the card in grid if visible
+      syncCardTitle(item.id, newTitle);
+    });
+  });
+  frag.appendChild(titleEl);
+
+  // Tags
+  const tagsDiv = document.createElement('div');
+  tagsDiv.className = 'lb-tags';
   const allTags = [...(item.tags.projectType || []), ...(item.tags.theme || [])];
-  return `
-    <span class="lb-title">${escHtml(item.title)}</span>
-    <div class="lb-tags">${allTags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')}</div>
-    <a class="lb-link" href="${item.url}" target="_blank" rel="noopener">↗ Source</a>
-  `;
+  tagsDiv.innerHTML = allTags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('');
+  frag.appendChild(tagsDiv);
+
+  // Source link
+  const link = document.createElement('a');
+  link.className = 'lb-link';
+  link.href = item.url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.textContent = '↗ Source';
+  frag.appendChild(link);
+
+  return frag;
 }
 
 function showLightboxFallback(item) {
   lbInner.innerHTML = `
     <div class="lb-blocked">
-      <p>This site blocks embedding. Open it directly in a new tab.</p>
+      <p>This site blocks embedding.</p>
       <a href="${item.url}" target="_blank" rel="noopener">Open ${escHtml(item.title)} ↗</a>
     </div>
   `;
 }
 
 function closeLightbox() {
+  currentLightboxItem = null;
   lightbox.hidden = true;
   lbClose.classList.remove('visible');
   lbOverlay.classList.remove('visible');
