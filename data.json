@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1714100001000,
+    "title": "Prada SS25 Campaign Identity",
+    "url": "https://www.behance.net/gallery/example1",
+    "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Branding", "Print/editorial"],
+      "theme": ["Luxury", "Minimal"]
+    },
+    "dateSaved": "2026-04-28"
+  },
+  {
+    "id": 1714100002000,
+    "title": "Brutalist Type Poster Series",
+    "url": "https://www.behance.net/gallery/example2",
+    "thumbnail": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Poster", "Typography"],
+      "theme": ["Brutalist", "Bold"]
+    },
+    "dateSaved": "2026-04-27"
+  },
+  {
+    "id": 1714100003000,
+    "title": "Organic Skincare Brand System",
+    "url": "https://www.thebrandidentity.com/example3",
+    "thumbnail": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Branding", "Packaging"],
+      "theme": ["Organic", "Minimal"]
+    },
+    "dateSaved": "2026-04-27"
+  },
+  {
+    "id": 1714100004000,
+    "title": "Motion Loop — Fluid Morph",
+    "url": "https://dribbble.com/shots/example4",
+    "thumbnail": "https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Motion"],
+      "theme": ["Dark", "Bold"]
+    },
+    "dateSaved": "2026-04-26"
+  },
+  {
+    "id": 1714100005000,
+    "title": "Urban Photography Zine",
+    "url": "https://www.behance.net/gallery/example5",
+    "thumbnail": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Print/editorial"],
+      "theme": ["Street/urban", "Dark"]
+    },
+    "dateSaved": "2026-04-26"
+  },
+  {
+    "id": 1714100006000,
+    "title": "Retro Dashboard UI Kit",
+    "url": "https://dribbble.com/shots/example6",
+    "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Web design"],
+      "theme": ["Retro", "Colorful"]
+    },
+    "dateSaved": "2026-04-25"
+  },
+  {
+    "id": 1714100007000,
+    "title": "Neon Sign Type Study",
+    "url": "https://www.behance.net/gallery/example7",
+    "thumbnail": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Typography"],
+      "theme": ["Dark", "Bold", "Colorful"]
+    },
+    "dateSaved": "2026-04-25"
+  },
+  {
+    "id": 1714100008000,
+    "title": "Helvetica Neue Archive Page",
+    "url": "https://www.linotype.com/example8",
+    "thumbnail": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    "type": "page",
+    "tags": {
+      "projectType": ["Typography"],
+      "theme": ["Minimal", "Typographic"]
+    },
+    "dateSaved": "2026-04-24"
+  },
+  {
+    "id": 1714100009000,
+    "title": "Playful Illustration System",
+    "url": "https://dribbble.com/shots/example9",
+    "thumbnail": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Illustration"],
+      "theme": ["Playful", "Colorful"]
+    },
+    "dateSaved": "2026-04-24"
+  },
+  {
+    "id": 1714100010000,
+    "title": "Environmental Wayfinding System",
+    "url": "https://www.thebrandidentity.com/example10",
+    "thumbnail": "https://images.unsplash.com/photo-1558618047-f4e80c0d0bdf?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Environmental", "Branding"],
+      "theme": ["Bold", "Minimal"]
+    },
+    "dateSaved": "2026-04-23"
+  },
+  {
+    "id": 1714100011000,
+    "title": "Social Campaign — Geometric",
+    "url": "https://www.behance.net/gallery/example11",
+    "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Social content"],
+      "theme": ["Bold", "Colorful"]
+    },
+    "dateSaved": "2026-04-23"
+  },
+  {
+    "id": 1714100012000,
+    "title": "Monochrome Still Life Series",
+    "url": "https://www.behance.net/gallery/example12",
+    "thumbnail": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&q=80",
+    "type": "image",
+    "tags": {
+      "projectType": ["Print/editorial"],
+      "theme": ["Minimal", "Dark"]
+    },
+    "dateSaved": "2026-04-22"
+  }
+]

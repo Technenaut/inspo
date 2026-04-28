@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inspo</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="#" class="wordmark">INSPO</a>
+
+    <div class="filters">
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="projectType" aria-haspopup="true" aria-expanded="false">
+          Type <span class="chevron">▾</span>
+        </button>
+        <div class="dropdown" id="dropdown-projectType" role="listbox" aria-multiselectable="true">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <button class="filter-btn" data-filter="theme" aria-haspopup="true" aria-expanded="false">
+          Theme <span class="chevron">▾</span>
+        </button>
+        <div class="dropdown" id="dropdown-theme" role="listbox" aria-multiselectable="true">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <button class="clear-btn" id="clear-filters" hidden>Clear</button>
+    </div>
+
+    <div class="search-wrap">
+      <input
+        type="search"
+        id="search"
+        class="search-input"
+        placeholder="Search…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <span class="item-count" id="item-count"></span>
+  </header>
+
+  <main>
+    <div class="grid" id="grid">
+      <!-- cards injected by JS -->
+    </div>
+    <div class="empty-state" id="empty-state" hidden>
+      <p>No results.</p>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Item preview">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <div class="lightbox-inner" id="lightbox-inner">
+      <!-- content injected by JS -->
+    </div>
+    <div class="lightbox-meta" id="lightbox-meta">
+      <!-- meta injected by JS -->
+    </div>
+  </div>
+  <div class="lightbox-overlay" id="lightbox-overlay"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
